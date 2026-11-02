@@ -12,6 +12,7 @@ import type { Manifest, MapConfig } from "../domain/types";
 import { createCanvasOverlay } from "../render/canvasOverlay";
 import { createMapView } from "../render/mapView";
 import { createScene } from "../render/scene";
+import { loadAppFont } from "./appFont";
 import { createBottomSheet } from "./bottomSheet";
 import { createClipboardWriter, createCoordinateReadout } from "./coordinateReadout";
 import { renderErrorView } from "./errorView";
@@ -130,7 +131,8 @@ function mountShell(root: HTMLElement, manifest: Manifest, loader: DataLoader): 
 export async function startAppWithLoader(root: HTMLElement, loader: DataLoader): Promise<void> {
   root.textContent = loadingMessage;
   try {
-    const manifest = await loader.loadManifest();
+    // The layout is measured as soon as it mounts, so it waits for the typeface it is drawn in.
+    const [manifest] = await Promise.all([loader.loadManifest(), loadAppFont()]);
     mountShell(root, manifest, loader);
   } catch (error) {
     renderErrorView(root, describeError(error));
