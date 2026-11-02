@@ -232,6 +232,15 @@ describe("Replay marker tap on a phone", () => {
     );
   });
 
+  it("keeps the open sheet open on the tapped marker's details (the outside tap closes it first)", async () => {
+    const root = await startPhoneReplayAt30Seconds();
+    sheetHandle(root).click();
+    expect(sheetHandle(root).getAttribute("aria-expanded")).toBe("true");
+    tapAt(root, worldToClientPoint(root, coveredMarkerPosition));
+    expect(sheetHandle(root).getAttribute("aria-expanded")).toBe("true");
+    expect(isInPanelView(root, ".inspected-marker h3")).toBe(true);
+  });
+
   it("glides the marker above the sheet when motion is allowed", async () => {
     const root = await startPhoneReplayAt30Seconds();
     tapAt(root, worldToClientPoint(root, coveredMarkerPosition));

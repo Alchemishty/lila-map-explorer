@@ -4,7 +4,8 @@ import { expect, test, type Page } from "@playwright/test";
 // every filter in the top bar is on screen with the map first, the bar takes 2 rows (3 in Replay),
 // the chosen match's full label can be read, both match lists are grouped by UTC start day, an
 // open dropdown list is drawn above the map's world-position box and crosshair, a tap on the map
-// closes it, and the area hint has no keyboard-only wording.
+// closes it, a tap on the map closes the open panels, and the area hint has no keyboard-only
+// wording.
 
 test.skip(({ isMobile }) => !isMobile, "phone layout only");
 
@@ -167,4 +168,18 @@ test("the area hint names only touch steps, not Shift-drag", async ({ page }) =>
   await expect(page.locator(".panel-hint")).toHaveText(
     "Press Select area, then drag on the map to see what happened in an area.",
   );
+});
+
+test("a tap on the map closes the open panels (user decision 2026-11-03)", async ({ page }) => {
+  await openApp(page);
+  await page.getByRole("button", { name: "Show panels" }).tap();
+  await expect(page.getByRole("button", { name: "Hide panels" })).toBeVisible();
+  const mapBox = await page.locator(".map-container").boundingBox();
+  if (mapBox === null) {
+    throw new Error("The map container has no layout box");
+  }
+
+  await page.touchscreen.tap(mapBox.x + mapBox.width / 2, mapBox.y + mapBox.height * 0.2);
+
+  await expect(page.getByRole("button", { name: "Show panels" })).toBeVisible();
 });
