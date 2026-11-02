@@ -49,3 +49,11 @@ def test_readme_quick_start_runs_existing_targets_in_dependency_order() -> None:
         assert re.search(rf"^{target_name}:", makefile_text, flags=re.MULTILINE), (
             f"{readme_path}: Makefile has no target {target_name}"
         )
+
+
+def test_readme_opens_with_the_live_app_link() -> None:
+    readme_path = PROJECT_ROOT / "README.md"
+    opening_lines = readme_path.read_text().splitlines()[:4]
+    assert "https://alchemishty.github.io/lila-map-explorer/" in "\n".join(opening_lines), (
+        f"{readme_path}: the live app link must stay at the top"
+    )

@@ -1,5 +1,7 @@
 # LILA Map Explorer
 
+**Live app: https://alchemishty.github.io/lila-map-explorer/** (works on desktop and phone)
+
 Where do players spend their time? Where do fights happen? Which routes do they take through a map?
 
 LILA Map Explorer helps level designers answer these questions from recorded match data. It puts player trails, event markers and heatmaps on the game's real minimaps. You can look across matches in Overview, then open one in Replay to see how it unfolded.
