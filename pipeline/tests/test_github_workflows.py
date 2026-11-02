@@ -27,7 +27,7 @@ def test_deploy_workflow_builds_fresh_data_and_publishes_only_web_dist_from_main
     assert "run: make build" in workflow
     assert "path: web/dist" in workflow
     assert "needs: build" in workflow
-    assert "uses: actions/deploy-pages@v4" in workflow
+    assert "uses: actions/deploy-pages@v5" in workflow
     assert "pages: write" in workflow
     assert "id-token: write" in workflow
 
