@@ -1,0 +1,114 @@
+{
+  "player": {
+    "Position": {
+      "category": "position",
+      "other_party": "none",
+      "marker": null
+    },
+    "Kill": {
+      "category": "kill",
+      "other_party": "player",
+      "marker": "kill_player"
+    },
+    "BotKill": {
+      "category": "kill",
+      "other_party": "bot",
+      "marker": "kill_bot"
+    },
+    "Killed": {
+      "category": "combat_death",
+      "other_party": "player",
+      "marker": "death_by_player"
+    },
+    "BotKilled": {
+      "category": "combat_death",
+      "other_party": "bot",
+      "marker": "death_by_bot"
+    },
+    "KilledByStorm": {
+      "category": "storm_death",
+      "other_party": "none",
+      "marker": "storm_death"
+    },
+    "Loot": {
+      "category": "loot",
+      "other_party": "none",
+      "marker": "loot"
+    }
+  },
+  "bot": {
+    "BotPosition": {
+      "category": "position",
+      "other_party": "none",
+      "marker": null
+    },
+    "BotKill": {
+      "category": "bot_kill",
+      "other_party": "unknown",
+      "marker": "bot_kill"
+    },
+    "BotKilled": {
+      "category": "bot_death",
+      "other_party": "unknown",
+      "marker": "bot_death"
+    }
+  },
+  "markers": {
+    "kill_player": {
+      "label": "Player killed a player",
+      "shape": "circle",
+      "fill": "#ef4444",
+      "cross": "#ffffff",
+      "outline": "solid"
+    },
+    "kill_bot": {
+      "label": "Player killed a bot",
+      "shape": "square",
+      "fill": "#ef4444",
+      "cross": "#ffffff",
+      "outline": "solid"
+    },
+    "death_by_player": {
+      "label": "Player killed by a player",
+      "shape": "circle",
+      "fill": "#111111",
+      "cross": "#ef4444",
+      "outline": "solid"
+    },
+    "death_by_bot": {
+      "label": "Player killed by a bot",
+      "shape": "square",
+      "fill": "#111111",
+      "cross": "#ef4444",
+      "outline": "solid"
+    },
+    "storm_death": {
+      "label": "Player died to storm",
+      "shape": "triangle",
+      "fill": "#a855f7",
+      "cross": "",
+      "outline": "solid"
+    },
+    "loot": {
+      "label": "Player looted",
+      "shape": "diamond",
+      "fill": "#facc15",
+      "cross": "",
+      "outline": "solid"
+    },
+    "bot_kill": {
+      "label": "Bot made a kill (victim not recorded)",
+      "shape": "square",
+      "fill": "#ef4444",
+      "cross": "#ffffff",
+      "outline": "dashed"
+    },
+    "bot_death": {
+      "label": "Bot died (killer not recorded)",
+      "shape": "square",
+      "fill": "#111111",
+      "cross": "#ef4444",
+      "outline": "dashed"
+    }
+  }
+}

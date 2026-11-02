@@ -1,0 +1,163 @@
+/* World-position readout over the map's bottom-left corner (top-right on phones, where the bottom
+   sheet covers the bottom of the map; Leaflet's zoom buttons are top-left). */
+.map-frame {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  position: relative;
+}
+
+.coordinate-readout {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: var(--layer-above-map);
+  padding: 6px 10px;
+  background: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-surface);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
+  line-height: 1.25;
+}
+
+.coordinate-readout-caption,
+.coordinate-readout-axis,
+.coordinate-readout-hint {
+  color: var(--text-muted);
+}
+
+.coordinate-readout-caption {
+  font-size: var(--font-size-small);
+}
+
+.coordinate-readout-values {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.coordinate-readout-value {
+  min-width: 7ch;
+  font-variant-numeric: tabular-nums;
+}
+
+.coordinate-readout-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-small);
+}
+
+.coordinate-readout-actions:empty {
+  display: none;
+}
+
+.coordinate-readout-copy {
+  font: inherit;
+  padding: 4px 10px;
+  color: var(--text-on-accent);
+  background: var(--accent);
+  border: 0;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+
+.coordinate-readout-copy:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Still part of the Copy button's accessible name, only hidden from view. */
+.coordinate-readout-hidden-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Two thin lines crossing at the map's centre, light with a dark edge so they show on any minimap. */
+.coordinate-readout-crosshair {
+  position: absolute;
+  left: calc(50% - 12px);
+  top: calc(50% - 12px);
+  width: 24px;
+  height: 24px;
+  z-index: var(--layer-above-map);
+  pointer-events: none;
+}
+
+.coordinate-readout-crosshair::before,
+.coordinate-readout-crosshair::after {
+  content: "";
+  position: absolute;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 70%);
+}
+
+.coordinate-readout-crosshair::before {
+  left: 0;
+  top: 11px;
+  width: 24px;
+  height: 2px;
+}
+
+.coordinate-readout-crosshair::after {
+  left: 11px;
+  top: 0;
+  width: 2px;
+  height: 24px;
+}
+
+/* Phone: the box moves top-right. With a Copy button (touch screens) it is compact: the caption
+   over the values, with Copy beside both at the box's full height, so the box covers little of the
+   map and Copy stays a large target. */
+@media (max-width: 720px) {
+  .coordinate-readout {
+    bottom: auto;
+    left: auto;
+    top: 8px;
+    right: 8px;
+  }
+
+  .coordinate-readout:has(.coordinate-readout-copy) {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 8px;
+    padding: 4px 4px 4px 8px;
+  }
+
+  .coordinate-readout:has(.coordinate-readout-copy) .coordinate-readout-caption,
+  .coordinate-readout:has(.coordinate-readout-copy) .coordinate-readout-values {
+    grid-column: 1;
+  }
+
+  .coordinate-readout:has(.coordinate-readout-copy) .coordinate-readout-values {
+    gap: 4px;
+  }
+
+  /* Wide enough for "-500.0", so the box keeps its width as the values change. */
+  .coordinate-readout:has(.coordinate-readout-copy) .coordinate-readout-value {
+    min-width: 6ch;
+  }
+
+  .coordinate-readout:has(.coordinate-readout-copy) .coordinate-readout-actions {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .coordinate-readout-copy {
+    min-width: 44px;
+    min-height: 32px;
+    padding: 0 8px;
+    font-size: var(--font-size-body);
+  }
+
+  .coordinate-readout-status {
+    align-self: center;
+    max-width: 10em;
+  }
+}

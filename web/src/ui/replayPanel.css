@@ -1,0 +1,140 @@
+/* Replay panel (inside the side panel or bottom sheet). The timeline is in timeline.css. */
+.replay-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.replay-status,
+.no-bot-files-note {
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-background);
+}
+
+.no-bot-files-note {
+  color: var(--text-muted);
+}
+
+.actor-list {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.actor-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.actor-button:not([aria-pressed="true"]):hover {
+  background: var(--surface-hover);
+}
+
+.actor-button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--surface-background);
+}
+
+/* Round = player, square with a dashed grey outline = bot (docs/domain.md trail language). */
+.actor-swatch {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--surface-background);
+}
+
+.actor-swatch.is-player {
+  border-radius: 50%;
+}
+
+.actor-swatch.is-bot {
+  border: 1.5px dashed #64748b;
+}
+
+.actor-kind {
+  min-width: 3.2em;
+}
+
+.actor-key {
+  color: var(--text-muted);
+}
+
+.inspected-marker h3,
+.inspected-marker-stack h3,
+.followed-actor h3 {
+  margin: 0 0 4px;
+  font-size: var(--font-size-body);
+}
+
+.inspected-marker ul,
+.followed-actor ul {
+  margin: 0 0 10px;
+  padding-left: 18px;
+}
+
+/* Several events at one spot: one collapsed row per event. */
+.inspected-marker-stack {
+  margin-bottom: 10px;
+}
+
+.inspected-marker-stack summary {
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.inspected-marker-stack ul {
+  margin: 0 0 6px;
+  padding-left: 32px;
+}
+
+/* Key to trail head states (telemetry audit issue 9): swatch, then label and meaning. */
+/* Folded under its summary; the summary keeps the browser's open/closed marker so it reads as one. */
+.trail-head-key {
+  margin-top: 12px;
+}
+
+.trail-head-key > summary {
+  padding: 4px 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.trail-head-key[open] > summary {
+  margin-bottom: 4px;
+}
+
+.trail-head-key ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.trail-head-key-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.trail-head-swatch {
+  flex-shrink: 0;
+}
+
+.trail-head-key p {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+}

@@ -1,0 +1,184 @@
+/* Replay's timeline, docked under the map: controls, scrubber and event ticks with tooltips. */
+.timeline {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px 16px;
+  padding: 8px 12px;
+  background: var(--surface-raised);
+  border-top: 1px solid var(--surface-border);
+  /* Above the map and the phone's bottom sheet, so a tick's tooltip is never hidden behind them. */
+  position: relative;
+  z-index: var(--layer-above-map);
+}
+
+.timeline-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timeline-play-button {
+  width: 36px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--accent);
+  color: var(--text-on-accent);
+  cursor: pointer;
+}
+
+/* A segmented switch, as the mode switch in the top bar. */
+.timeline-speeds {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--surface-background);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+}
+
+.timeline-speeds button {
+  border: 0;
+  border-radius: var(--radius-small);
+  background: transparent;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+
+.timeline-speeds button:not([aria-pressed="true"]):not(:disabled):hover {
+  background: var(--surface-hover);
+}
+
+.timeline-speeds button[aria-pressed="true"] {
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+  color: var(--text-on-accent);
+}
+
+.timeline-play-button:disabled,
+.timeline-speeds button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.timeline-clock {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The ticks sit over the scrubber's travel, inset by half the thumb so they line up with it. */
+.timeline-track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.timeline-ticks {
+  position: relative;
+  height: 24px;
+  margin: 0 8px;
+}
+
+/* Each tick is a 24 × 24 px target (WCAG 2.5.8) around a 6 × 14 px mark, so it is easy to hit
+   without drawing a bigger mark. */
+.timeline-tick {
+  position: absolute;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-small);
+  background: transparent;
+  cursor: pointer;
+}
+
+.timeline-tick::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 5px;
+  width: 6px;
+  height: 14px;
+  box-sizing: border-box;
+  border: 1px solid var(--surface-background);
+  border-radius: var(--radius-mark);
+  background: var(--tick-fill);
+}
+
+/* Events performed by a bot keep their dashed grey outline on the timeline too. */
+.timeline-tick[data-outline="dashed"]::before {
+  border: 1px dashed #cbd5e1;
+}
+
+.timeline-tick:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0;
+}
+
+/* The marker label and time into match, over the tick on hover and on keyboard focus. */
+.timeline-tick-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-background);
+  color: var(--text-primary);
+  font-size: var(--font-size-small);
+  text-align: left;
+  /* One line each, unless a label is too long for a phone: then it wraps inside the screen. */
+  width: max-content;
+  max-width: min(320px, calc(100vw - 32px));
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.timeline-tick-tooltip[data-align="start"] {
+  left: 0;
+  transform: none;
+}
+
+.timeline-tick-tooltip[data-align="end"] {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.timeline-tick-tooltip-label {
+  font-weight: 600;
+}
+
+.timeline-tick:hover .timeline-tick-tooltip,
+.timeline-tick:focus-visible .timeline-tick-tooltip {
+  visibility: visible;
+}
+
+/* Escape hides it until the pointer or focus leaves the tick (WCAG 1.4.13). */
+.timeline-tick[data-tooltip-dismissed="true"] .timeline-tick-tooltip {
+  visibility: hidden;
+}
+
+.timeline-scrubber {
+  width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .timeline {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 6px 8px;
+  }
+
+  .timeline-controls {
+    justify-content: space-between;
+  }
+}

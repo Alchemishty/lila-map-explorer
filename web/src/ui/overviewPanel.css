@@ -1,0 +1,243 @@
+/* Overview panel: layer switches, legend and area inspector (inside the side panel or bottom sheet). */
+.overview-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.overview-status {
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-background);
+}
+
+/* Section headings in sentence case, one step up the type scale from the body. */
+.panel-section h2 {
+  margin: 0 0 8px;
+  font-size: var(--font-size-heading);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.heatmap-choice {
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+}
+
+.heatmap-choice legend {
+  padding: 0;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.panel-section .checkbox-row {
+  white-space: normal;
+}
+
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.legend-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-entry canvas {
+  flex-shrink: 0;
+}
+
+.select-area-button,
+.replay-here-button {
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-background);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.select-area-button:not([aria-pressed="true"]):hover {
+  background: var(--surface-hover);
+}
+
+.select-area-button[aria-pressed="true"],
+.replay-here-button:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.replay-here-button:disabled {
+  cursor: not-allowed;
+  color: var(--text-muted);
+}
+
+.panel-hint {
+  color: var(--text-muted);
+  margin: 8px 0 0;
+}
+
+/* The area's count per marker type: legend swatches with numbers, as in the match rows below. */
+.area-counts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 10px 0;
+  padding: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.area-passing-through {
+  margin: 0 0 10px;
+}
+
+/* Leaflet sets its own grab cursor; a crosshair says drags draw an area. */
+.map-container.is-selecting-area,
+.map-container.is-selecting-area .leaflet-interactive {
+  cursor: crosshair;
+}
+
+.heatmap-choice p {
+  margin: 0 0 8px 24px;
+  font-size: var(--font-size-small);
+  color: var(--text-muted);
+}
+
+.marker-position-explanation,
+#bot-visibility-hint {
+  font-size: var(--font-size-small);
+  color: var(--text-muted);
+}
+
+.heatmap-scale {
+  margin: 4px 0 4px 24px;
+}
+
+.heatmap-scale-title {
+  margin: 0 0 4px;
+  font-size: var(--font-size-small);
+  font-weight: 600;
+}
+
+.heatmap-scale-bar {
+  position: relative; /* holds the busiest part's outline */
+  height: 10px;
+  border-radius: var(--radius-mark);
+}
+
+/* The busiest part of the ramp, outlined as the map outlines the busiest zones (render/drawHeatmapOutline.ts). */
+.heatmap-scale-busiest-outline {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 1.5px solid #ffffff;
+  border-radius: var(--radius-small);
+  box-shadow:
+    0 0 0 1px rgb(22 23 26 / 75%),
+    inset 0 0 0 1px rgb(22 23 26 / 75%);
+}
+
+.heatmap-scale-ends {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 2px;
+  font-size: var(--font-size-small);
+  color: var(--text-muted);
+}
+
+.replay-match-heading {
+  font-size: inherit;
+  margin: 0 0 6px;
+}
+
+.replay-match-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.replay-match-button,
+.show-all-matches > summary {
+  width: 100%;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-background);
+  color: inherit;
+  padding: 6px 10px;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.replay-match-button:hover,
+.show-all-matches > summary:hover {
+  background: var(--surface-hover);
+}
+
+.show-all-matches {
+  margin-top: 4px;
+}
+
+.show-all-matches > summary {
+  text-align: center;
+}
+
+.show-all-matches[open] > summary {
+  margin-bottom: 4px;
+}
+
+/* Each match row's events per marker type: wraps at phone width, never scrolls. */
+.replay-match-label {
+  display: block;
+}
+
+.replay-match-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 4px;
+}
+
+.replay-match-marker,
+.area-count {
+  position: relative; /* holds its hidden marker label */
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.replay-match-marker canvas,
+.area-count canvas {
+  flex-shrink: 0;
+}
+
+/* Still part of the row button's accessible name, only hidden from view. */
+.marker-label-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Shown when a sparse event heatmap's colour top is raised (domain/heatmapColorTop.ts). */
+.heatmap-scale-note {
+  margin: 4px 0 0;
+  font-size: var(--font-size-small);
+  color: var(--text-muted);
+}

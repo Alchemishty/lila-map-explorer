@@ -1,0 +1,60 @@
+/* The legend as per-type marker switches (markerSwitches.ts), shared by Overview and Replay. */
+.marker-switch-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.marker-switch-action,
+.marker-only-button {
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  background: var(--surface-background);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.marker-switch-action:hover,
+.marker-only-button:hover {
+  background: var(--surface-hover);
+}
+
+.marker-switch-action {
+  padding: 4px 12px;
+}
+
+.marker-switches .legend-entry label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.marker-only-button {
+  flex-shrink: 0;
+  padding: 2px 10px;
+  font-size: var(--font-size-small);
+}
+
+.marker-switches .marker-switch-bot-heading {
+  margin: 12px 0 6px;
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* With a mouse, each row's Only button shows on hover or on keyboard focus anywhere in the row; it
+   stays in the tab order and the accessibility tree, only see-through. Touch screens always show it. */
+@media (hover: hover) {
+  .marker-switches .legend-entry .marker-only-button {
+    opacity: 0;
+  }
+
+  .marker-switches .legend-entry:hover .marker-only-button,
+  .marker-switches .legend-entry:focus-within .marker-only-button {
+    opacity: 1;
+  }
+}

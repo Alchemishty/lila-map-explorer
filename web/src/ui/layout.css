@@ -1,0 +1,286 @@
+* {
+  box-sizing: border-box;
+}
+
+/* The hidden attribute wins over any display rule below (for example the Replay match field). */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--surface-background);
+  color: var(--text-primary);
+}
+
+button,
+select,
+summary {
+  font: inherit;
+  color: inherit;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Top bar */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 8px 12px;
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--surface-border);
+  position: relative;
+  z-index: var(--layer-top-bar);
+}
+
+.top-bar-title {
+  font-weight: 700;
+}
+
+/* A segmented switch: a recessed track with the pressed choice as a light chip. */
+.mode-switch {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--surface-background);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+}
+
+.mode-switch button {
+  border: 0;
+  border-radius: var(--radius-small);
+  background: transparent;
+  padding: 3px 14px;
+  cursor: pointer;
+}
+
+.mode-switch button:not([aria-pressed="true"]):hover {
+  background: var(--surface-hover);
+}
+
+.mode-switch button[aria-pressed="true"] {
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+  color: var(--text-on-accent);
+}
+
+.top-bar-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  min-width: 0;
+}
+
+.top-bar-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.top-bar-field select {
+  background: var(--surface-background);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  padding: 4px 8px;
+  max-width: 100%;
+}
+
+/* Replay's match: the chosen match's full label, drawn under a see-through native select that
+   still opens the browser's (or phone's) own picker. */
+.replay-match-control {
+  display: grid;
+  position: relative;
+  min-width: 0;
+}
+
+.replay-match-chosen,
+.replay-match-control select {
+  grid-area: 1 / 1;
+}
+
+.replay-match-chosen {
+  max-width: 460px;
+  padding: 4px 24px 4px 7px;
+  background: var(--surface-background);
+  border-radius: var(--radius-control);
+  /* A label too long for the field wraps onto another line rather than being cut off. */
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+
+.replay-match-chosen::after {
+  content: "▾";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.replay-match-control:has(select:disabled) .replay-match-chosen {
+  color: var(--text-muted);
+}
+
+.replay-match-control select {
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  padding: 0;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+/* Forced colours (for example Windows high contrast) repaint the select's see-through text, so the
+   drawn label would show twice: the plain select is shown alone, its row label in system colours. */
+@media (forced-colors: active) {
+  .replay-match-chosen {
+    display: none;
+  }
+
+  .replay-match-control select {
+    appearance: auto;
+    padding: 4px 6px;
+    color: CanvasText;
+    background: Canvas;
+  }
+}
+
+/* The open list keeps readable text, since the closed select's own text is see-through. */
+.replay-match-control optgroup,
+.replay-match-control option {
+  color: var(--text-primary);
+  background: var(--surface-raised);
+}
+
+.filter-dropdown {
+  position: relative;
+}
+
+.filter-dropdown summary {
+  cursor: pointer;
+  background: var(--surface-background);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  padding: 4px 10px;
+  white-space: nowrap;
+  list-style: none;
+}
+
+.filter-dropdown summary:hover {
+  background: var(--surface-hover);
+}
+
+.filter-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.filter-dropdown summary::after {
+  content: " ▾";
+}
+
+.filter-dropdown-list {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  min-width: 180px;
+  max-width: min(460px, calc(100vw - 24px));
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 6px;
+  background: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-surface);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 40%);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* A UTC start day's heading in the matches list; it stays in view while its matches scroll. */
+.list-day-heading {
+  position: sticky;
+  top: -6px;
+  padding: 6px 6px 2px;
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+  font-weight: 600;
+}
+
+.all-matches-row {
+  border-bottom: 1px solid var(--surface-border);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+/* Map and panel area */
+.workspace {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  position: relative;
+}
+
+/* Doubled class to win over Leaflet's own .leaflet-container background. */
+.map-container.map-container {
+  flex: 1;
+  min-width: 0;
+  background: var(--map-background);
+}
+
+.bottom-sheet {
+  width: 300px;
+  background: var(--surface-raised);
+  border-left: 1px solid var(--surface-border);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.bottom-sheet-handle {
+  display: none;
+}
+
+.bottom-sheet-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+/* Error view */
+.error-view {
+  max-width: 640px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+
+.error-view-message {
+  background: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-control);
+  padding: 12px;
+  overflow-wrap: anywhere;
+}

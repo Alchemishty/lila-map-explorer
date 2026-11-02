@@ -1,0 +1,5 @@
+{
+  "AmbroseValley": {"image_file": "AmbroseValley_Minimap.png", "world_scale": 900, "world_origin_x": -370, "world_origin_z": -473},
+  "GrandRift": {"image_file": "GrandRift_Minimap.png", "world_scale": 581, "world_origin_x": -290, "world_origin_z": -290},
+  "Lockdown": {"image_file": "Lockdown_Minimap.jpg", "world_scale": 1000, "world_origin_x": -500, "world_origin_z": -500}
+}

@@ -1,0 +1,106 @@
+{
+  "cleaning": {
+    "files_read": 1243,
+    "duplicate_file_rows_dropped": 88,
+    "duplicate_block_rows_dropped": 190,
+    "duplicate_botkilled_rows_dropped": 0,
+    "same_tick_repeat_rows": 30
+  },
+  "raw_rows": 89104,
+  "cleaned_rows": 88826,
+  "matches": 796,
+  "player_sessions": 798,
+  "bot_sessions": 444,
+  "matches_with_bot_tracks": 52,
+  "matches_with_one_player": 794,
+  "player_sessions_without_death": 355,
+  "bot_sessions_without_death": 148,
+  "player_traffic_seconds": 314392,
+  "player_uncredited_tail_seconds": 3728,
+  "player_sessions_with_uncredited_tail": 395,
+  "maximum_position_gap_seconds": 518,
+  "maximum_player_position_gap_seconds": 302,
+  "events_by_actor_type": [
+    {
+      "actor_type": "bot",
+      "event": "BotKill",
+      "count": 170
+    },
+    {
+      "actor_type": "bot",
+      "event": "BotKilled",
+      "count": 296
+    },
+    {
+      "actor_type": "bot",
+      "event": "BotPosition",
+      "count": 21712
+    },
+    {
+      "actor_type": "human",
+      "event": "BotKill",
+      "count": 2223
+    },
+    {
+      "actor_type": "human",
+      "event": "BotKilled",
+      "count": 400
+    },
+    {
+      "actor_type": "human",
+      "event": "Kill",
+      "count": 3
+    },
+    {
+      "actor_type": "human",
+      "event": "Killed",
+      "count": 3
+    },
+    {
+      "actor_type": "human",
+      "event": "KilledByStorm",
+      "count": 39
+    },
+    {
+      "actor_type": "human",
+      "event": "Loot",
+      "count": 12714
+    },
+    {
+      "actor_type": "human",
+      "event": "Position",
+      "count": 50501
+    },
+    {
+      "actor_type": "human_misid",
+      "event": "BotKill",
+      "count": 13
+    },
+    {
+      "actor_type": "human_misid",
+      "event": "BotKilled",
+      "count": 1
+    },
+    {
+      "actor_type": "human_misid",
+      "event": "Loot",
+      "count": 115
+    },
+    {
+      "actor_type": "human_misid",
+      "event": "Position",
+      "count": 636
+    }
+  ],
+  "evidence_table_row_counts": {
+    "sessions": 1242,
+    "same_second_combat": 5,
+    "post_death_rows": 175,
+    "same_second_different_positions": 802,
+    "repeated_event_groups": 2319,
+    "long_position_gaps": 312,
+    "fast_position_segments": 73,
+    "event_position_leads": 88,
+    "raw_files": 1243
+  }
+}

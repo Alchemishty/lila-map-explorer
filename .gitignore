@@ -1,0 +1,21 @@
+node_modules/
+dist/
+web/public/data/
+.venv/
+__pycache__/
+.superpowers/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+test-results/
+playwright-report/
+__screenshots__/
+
+# Local agent workspaces: review snapshots and ledger, planning specs and plans
+.review/
+docs/superpowers/
+
+# Machine-local files
+.DS_Store
+.claude/settings.local.json
+.claude/scheduled_tasks.lock

@@ -1,0 +1,110 @@
+/* Phone: the map fills the screen, the top bar wraps onto rows (the map and mode switch, then the
+   other filters, then Replay's match) and panels sit in a bottom sheet. */
+@media (max-width: 720px) {
+  .top-bar {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .top-bar-title {
+    display: none;
+  }
+
+  /* The map and the mode switch share the first row. */
+  .mode-switch {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .mode-switch button {
+    flex: 1;
+  }
+
+  /* Wraps rather than scrolls sideways, so every filter stays in view. */
+  .top-bar-filters {
+    flex: 1 0 100%;
+    flex-wrap: wrap;
+    margin-left: 0;
+    gap: 6px;
+  }
+
+  /* Still the select's accessible name, only hidden from view. */
+  .field-label-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .top-bar-field,
+  .filter-dropdown {
+    flex-shrink: 0;
+  }
+
+  .top-bar-field select {
+    max-width: 150px;
+  }
+
+  /* Replay: the match picker gets its own full-width row, so the replayed match is always seen. */
+  .app-shell[data-mode="replay"] .replay-match-field {
+    flex: 1 0 100%;
+  }
+
+  .app-shell[data-mode="replay"] .replay-match-control {
+    flex: 1;
+  }
+
+  /* The chosen match's full label may use the whole row, wrapping onto a second line. */
+  .replay-match-chosen {
+    max-width: none;
+  }
+
+  .replay-match-control select {
+    max-width: none;
+  }
+
+  .checkbox-row {
+    white-space: normal;
+  }
+
+  .filter-dropdown {
+    position: static;
+  }
+
+  /* Opens under the whole top bar (the positioned ancestor), so it never covers another filter. */
+  .filter-dropdown-list {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: calc(100% + 4px);
+    max-width: none;
+  }
+
+  .bottom-sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 60%;
+    border-left: 0;
+    border-top: 1px solid var(--surface-border);
+    border-radius: var(--radius-surface) var(--radius-surface) 0 0;
+    z-index: var(--layer-above-map);
+  }
+
+  .bottom-sheet-handle {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .bottom-sheet[data-expanded="false"] .bottom-sheet-content {
+    display: none;
+  }
+}
