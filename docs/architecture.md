@@ -69,7 +69,7 @@ Decisions made while building that later work must respect:
 - **One owner for the canvas.** `render/scene.ts` holds every layer in world space and redraws them all in a fixed order. Overview and Replay only call `scene.setLayers(...)`, which replaces every layer; the active mode passes empty layers when it has nothing to show, so switching mode never leaves the other mode's drawing behind.
 - **State resets go through `transitionAppState`** (`ui/stateTransitions.ts`). A match change gives elapsed 0, paused and no followed actor. A filter change keeps the match if it's still selected, otherwise the earliest selected match, otherwise `null`. The Replay picker shows exactly the selected matches.
 - **Repeat rows are ordinary rows.** Rows flagged `isSameTickRepeat` count and draw like any other; the marker inspector notes a possible multi-kill.
-- **Area counts follow the visible markers.** Overview area counts use the visible-marker event set (bot events only when "Bot events" is on), whatever the heatmap. In Replay bot events are on by default, and hiding bots hides bot trails and bot-performed events.
+- **Overview area counts include every player event.** Player marker switches only change what is drawn; area counts include every player-side event type, even when all markers are off, whatever the heatmap. Each bot-event type counts only while its own marker switch is on. In Replay bot events are on by default, and hiding bots hides bot trails and bot-performed events.
 - **Heatmap grid edges.** Cells include the top edge, and points outside the grid throw.
 - **Data URL.** `dataBaseUrl = import.meta.env.BASE_URL + "data/"`, with Vite `base: "./"`, so the site works under a subdirectory.
 - **Phone layout** applies at viewport width ≤ 720 px.
