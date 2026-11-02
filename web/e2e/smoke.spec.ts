@@ -85,6 +85,7 @@ async function openReplayOfFirstMatchWithBots(page: Page): Promise<MatchSummary>
   await expect(page.locator(".actor-list .actor-button")).toHaveCount(
     matchWithBots.playerCount + matchWithBots.botCount,
   );
+  await showPanels(page); // on a phone, the taps on the top bar closed the sheet
   return matchWithBots;
 }
 

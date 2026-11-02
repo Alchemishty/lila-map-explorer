@@ -10,7 +10,7 @@ import "./timeline.css";
 import { createDataLoader, fetchJsonOverHttp, type DataLoader } from "../data/loader";
 import type { Manifest, MapConfig } from "../domain/types";
 import { createCanvasOverlay } from "../render/canvasOverlay";
-import { createMapView } from "../render/mapView";
+import { createMapView, type SavedMapView } from "../render/mapView";
 import { createScene } from "../render/scene";
 import { loadAppFont } from "./appFont";
 import { createBottomSheet } from "./bottomSheet";
@@ -20,7 +20,12 @@ import { prefersReducedMotion } from "./keepMarkerAboveSheet";
 import { createOverviewPanel } from "./overviewPanel";
 import { createReplayPanel } from "./replayPanel";
 import { createStore } from "./store";
-import { createInitialAppState, transitionAppState, type AppState } from "./stateTransitions";
+import {
+  createInitialAppState,
+  transitionAppState,
+  type AppMode,
+  type AppState,
+} from "./stateTransitions";
 import { createTopBar } from "./topBar";
 
 // The app shell: loads the manifest, then lays out the top bar, the map and the panel area, and
@@ -107,6 +112,10 @@ function mountShell(root: HTMLElement, manifest: Manifest, loader: DataLoader): 
   shellElement.append(replayPanel.timelineElement);
 
   let shownMapId: string | null = null;
+  let shownAppMode: AppMode | null = null;
+  // Overview keeps its own view: Replay frames each match, and coming back to Overview puts back
+  // the view the designer left it at. A map changed in Replay brings the whole new map instead.
+  let leftOverviewView: SavedMapView | null = null;
   function showState(state: AppState): void {
     shellElement.dataset.mode = state.appMode;
     topBar.showState(state);
@@ -116,9 +125,23 @@ function mountShell(root: HTMLElement, manifest: Manifest, loader: DataLoader): 
       coordinateReadout.showMap(mapConfig);
       shownMapId = state.filter.mapId;
     }
+    // Saved before the panels show the state, so before Replay frames its match.
+    if (shownAppMode === "overview" && state.appMode === "replay") {
+      leftOverviewView = mapView.saveView();
+    }
     // Only the active mode's panel sets the scene's layers.
     overviewPanel.showState(state);
     replayPanel.showState(state);
+    // Put back after the panels, once Replay's timeline has left and the map has its Overview size.
+    if (shownAppMode === "replay" && state.appMode === "overview") {
+      if (leftOverviewView !== null && leftOverviewView.mapId === state.filter.mapId) {
+        mapView.restoreView(leftOverviewView);
+      } else {
+        mapView.showWholeMap();
+      }
+      leftOverviewView = null;
+    }
+    shownAppMode = state.appMode;
   }
   store.subscribe(showState);
   showState(store.getState());
